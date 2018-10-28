@@ -1,11 +1,9 @@
 # Project 3
 
 ## Requirements
-- Ability to post to Twitter.
-	- Ability to post images to Twitter.
-- Ability to read from other sites (Reddit?).
+1. Ability to post to Twitter -> get Twitter API tokens.
+2. Ability to post images to Twitter.
+3. Ability to read from other sites (Reddit?). -> web scrubbing
 	- Pull images from other sites.
-- Ability to store image data.
-- Ability to manipulate images.
-	- Generating combination images.
-- Ability to save images.
+4. Ability to save images in order to post them.
+5. Ability to manipulate images/randomize images.
