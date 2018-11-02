@@ -1,19 +1,68 @@
 # Sliding Tile Puzzle Game
 
+Taryn Chovan, Elena Murphy, Megan O'Toole 
+
+## 1 Introduction 
+
+### 1.1 Purpose
+The sliding tile puzzle challenges players to slide pieces within a 3x3 board to establish a certain end configuration. Eight of the nine squares will be filled with tile according to the corresponding end configuration. Players will only be allowed to move vertical or horizontal into the blank square to unscramble the puzzle. The first version of the sliding tile puzzle will establish an ascending number line, with later versions establishing a scrambled image.   
+### 1.2 Document Conventions
+
+### 1.3 Intended Audience and Reading Suggestions 
+
+### 1.4 Project Scope 
+Players will be presented a 3x3 game board with a scrambled number line(v1.0) or a scrambled image(v2.0). Eight of the nine squares will be filled with tile according to the corresponding end configuration. The ninth square will remain blank, allowing the player to strategically maneuver around the board. Players will only be allowed to move into the blank square vertically or horizontally. The game window will display the time passed since the start of the game and the number of moves the player has made. There will be a reset button to reset the game board, as well as a quit button. At the end of the game the player’s play time and move count will be displayed. If the player has played pervious round, their top 3 past records will also be displayed in descending order. At the bottom of the screen there will be a new game and quit option. 
+
+## 2 Overall Description 
+### 2.1 Product Perspective 
+
+### 2.2 Product Functions 
+- Players are challenged to solve sliding tile puzzle 
+- Play time and move count for each player is tracked
+- Players compete against their past recorder for fastest play time and/or smallest move count
+### 2.3 User Classes and Characteristics 
+
+### 2.4 Operating Environment 
+The game will be compatible with Apple and Android smartphones. 
+### 2.5 Design and Implementation Constraints 
+Internet connection will not be required. 
+### 2.6 User Documentation 
+There will be an instruction manual to explain the goal and rules of the game. 
+### 2.7 Assumptions and Dependencies 
+
+
+## 3 External Interface Requirements
+### 3.1 User Interface 
+The app will use a graphical user interface. The interface will allow players to slide tiles into the blank square. (add screenshots later??)
 ![sliding tile puzzle examples](http://allerleinett.club/wp-content/uploads/2018/05/tile-puzzle-games-sliding-tile-puzzles-tile-matching-puzzle-games.jpg)
+### 3.2 Software Interfaces 
 
-A game where a scrambled image is presented to the user in a square, split up into a grid, with one tile missing at one of the corners.  The user can only move a tile into that empty space.  The goal of the game is to unscramble the image with that limitation.
+## 4 System Features 
+### 4.1 Slide Tile Puzzle Board 
+#### 4.1.1 Description and Priority 
+The game board will display a 3x3 grid. Eight of the nine square will be filled randomly with the shuffled tiles with one of the squares being left blank. The slide tile puzzle board function is of high priority. 
+#### 4.1.2 Stimulus/Response Sequence 
+The grid will be filled randomly each game. Player’s will be allowed to reset the puzzle board to its original state for that round if they desire. This will not reset to player’s current play time or move count. 
+### 4.2 Swipe Function 
+#### 4.2.1 Description and Priority
+The swipe function allows user to move the tiles around the board to establish the proper end configuration. The swipe function is of high priority.
+#### 4.2.2 Stimulus/Response Sequences 
+The swipe function is dynamic to the user’s interactions. Users can swipe vertically or horizontally into the black square. 
+### 4.3 Best Player Time and Move Count 
+#### 4.3.1 Description and Priority 
+If a player play’s multiple games, their play time and move count for each round will be tracked. At the end of each game their current play time and move count will be displayed along with their top 3 records for the two categories. The best player time and move count function is of low priority. 
+#### 4.3.2 Stimulus/Response Sequences
+This function will be displayed automatically after each game. 
 
-## Requirements
-#### Essential Requirements
-1. Ability to post to Twitter -> get Twitter API tokens.
-2. Ability to post images to Twitter.
-3. Ability to read from other sites (Reddit?). -> web scrubbing
-	- Pull images from other sites.
-4. Ability to save images in order to post them.
-5. Ability to manipulate images/randomize images.
+## 5 Other Nonfunctional Requirements 
+### 5.1 Performance Requirements 
+The app should quickly receive swipe functions with no delay. The overall goal of performance is for the app to run quickly and smoothly. 
+### 5.2 Security Requirements 
+Usernames may be added in a later version of the app. Version 1.0 does not require it. 
+### 5.3 Software Quality Attributes 
 
-#### Optional Feature Requirements
-##### Scrambling an Image
-1. Taking an image from the local file.
-2. Splitting the image up into a grid, keeping track of each tile as a number for the system to be able to track changes by the user.
+## 6 Market Research --- idk if we need to do this, what would we even research? 
+
+
+
+
