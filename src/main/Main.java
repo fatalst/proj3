@@ -1,8 +1,15 @@
 package src.main.java;
 
-import java.util.*;
+import javax.swing.SwingUtilities;
 
 public class Main {
-	public static void main(final String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException{
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				new MenuBar();
+			}
+		});
 	}
 }
