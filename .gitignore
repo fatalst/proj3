@@ -1,0 +1,19 @@
+*.class
+*.log
+
+# IDEA files
+.idea/
+*.iml
+
+# generated files
+bin/
+build/
+gen/
+target/
+
+# Emacs files
+*~
+\#*\#
+
+# Mac files
+.DS_Store
