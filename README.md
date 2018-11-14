@@ -35,11 +35,11 @@ The sliding tile puzzle challenges players to slide pieces within a 3x3 board to
 
 1.2 Document Conventions 
 ---
-
+Coming soon.
 
 1.3 Intended Audience and Reading Suggestions 
 ---
-
+Coming soon.
 
 1.4 Product Scope 
 ---
@@ -49,6 +49,7 @@ Players will be presented a 3x3 game board with a scrambled number line(v1.0) or
 ===
 2.1 Product Perspective 
 ---
+Coming soon.
 
 2.2 Product Functions 
 ---
@@ -58,7 +59,7 @@ Players will be presented a 3x3 game board with a scrambled number line(v1.0) or
 
 2.3 User Classes and Characteristics 
 ---
-
+Coming soon.
 
 2.4 Operating Environment 
 ---
@@ -74,7 +75,7 @@ There will be an instruction manual to explain the goal and rules of the game.
 
 2.7 Assumptions and Dependencies 
 ---
-
+Coming soon.
 
 3 External Interface Requirements 
 ===
@@ -86,7 +87,7 @@ The app will use a graphical user interface. The interface will allow players to
 
 3.2 Software Interfaces 
 ---
-
+Coming soon.
 
 4 System Features 
 ===
@@ -97,12 +98,12 @@ The game board will display a 3x3 grid. Eight of the nine square will be filled 
 #### 4.1.2 Stimulus/Response Sequence 
 The grid will be filled randomly each game. Player’s will be allowed to reset the puzzle board to its original state for that round if they desire. This will not reset to player’s current play time or move count. 
 
-4.2 Swipe Function 
+4.2 Movement Function 
 ---
 #### 4.2.1 Description and Priority
-The swipe function allows user to move the tiles around the board to establish the proper end configuration. The swipe function is of high priority.
+The movement function allows user to move the tiles around the board to establish the proper end configuration. The movement function is of high priority.
 #### 4.2.2 Stimulus/Response Sequences 
-The swipe function is dynamic to the user’s interactions. Users can swipe vertically or horizontally into the black square. 
+The movement function is dynamic to the user’s interactions. Users can move the tiles vertically or horizontally into the black square.
 
 4.3 Best Player Time and Move Count 
 ---
@@ -123,11 +124,15 @@ Usernames may be added in a later version of the app. Version 1.0 does not requi
 
 5.3 Software Quality Attributes 
 ---
+Coming soon.
 
-
-6 Market Research... idk if we need to do this, what would we even research? 
+6 Project Makeup/Configuration
 ===
-
-
+6.1 Classes
+---
+- Menu: Building the menu and player interaction with the menu.
+- Board: Building and maintaining the game board, updating it as the game goes on and displaying it.
+- Game: Controlling the game, including checking for a winning board, starting a new game, and tracking movements by the player.
+- Main: Main class to start the game.
 
 
