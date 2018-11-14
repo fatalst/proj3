@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.swing.*;
 
 public class MenuBar extends JFrame {
@@ -28,17 +29,23 @@ public class MenuBar extends JFrame {
         panel.setBackground(Color.white); //can be deleted or for future color changes
         add(panel);
         panel.setLayout(null);
-        Icon startGame = new ImageIcon("C:/Users/Megan/Pictures/startButton.png");
-        JButton playNow = new JButton(startGame);
-        playNow.setBackground(Color.white);
-        playNow.setBorderPainted(false);
-        Icon title = new ImageIcon("C:/Users/Megan/Pictures/titlee.png");
-        JLabel welcome = new JLabel(title);
-        playNow.setBounds(350, 600, 312, 163);
-        welcome.setBounds(new Rectangle(new Point(50,175), welcome.getPreferredSize()));
-        panel.add(playNow);
-        panel.add(welcome);
-        pack();
+		try {
+			//start game button 
+			Icon startGame = new ImageIcon(new URL("https://i.imgur.com/pdGD8Pa.png"));
+			JButton playNow = new JButton(startGame);
+			playNow.setBackground(Color.white);
+			playNow.setBorderPainted(false);
+			playNow.setBounds(350, 600, 312, 163);
+			panel.add(playNow);
+			//game title label
+			Icon title = new ImageIcon(new URL("https://i.imgur.com/VicMsd2.png"));
+			JLabel welcome = new JLabel(title);
+			welcome.setBounds(new Rectangle(new Point(50,175), welcome.getPreferredSize()));
+			panel.add(welcome);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}       
+		pack();
         setVisible(true);
         setResizable(false);
         initializeMenuBar();
