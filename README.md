@@ -22,6 +22,7 @@ Sliding Tile Puzzle Game
   - [4.1 Slide Tile Puzzle Board](#41-slide-tile-puzzle-board)
   - [4.2 Swipe Function](#42-swipe-function)
   - [4.3 Best Player Time and Move Count](#43-best-player-time-and-move-count)
+  - [4.4 Optional Features](#44-optional-features)
 - [5 Other Nonfunctional Requirements](#5-other-nonfunctional-requirements)
   - [5.1 Performance Requirements](#51-performance-requirements)
   - [5.2 Security Requirements](#52-security-requirements)
@@ -111,6 +112,15 @@ The movement function is dynamic to the user’s interactions. Users can move th
 If a player play’s multiple games, their play time and move count for each round will be tracked. At the end of each game their current play time and move count will be displayed along with their top 3 records for the two categories. The best player time and move count function is of low priority. 
 #### 4.3.2 Stimulus/Response Sequences
 This function will be displayed automatically after each game.
+
+4.4 Optional Features 
+---
+#### 4.4.1 Resume 
+Unfinished games will be saved if window is close and players will be able to resume the game when the window is reopened. 
+#### 4.4.2 Hint
+Players can click on the hint button for a hint at which tile to move into the blank square. 
+#### 4.4.3 Give Up
+Player can click on the give up button the for game to be automatically solved by the computer. 
 
 5 Other Nonfunctional Requirements
 ===
