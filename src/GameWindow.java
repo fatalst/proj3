@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class GameWindow extends JFrame {
+public class GameWindow extends JFrame {        //contains the in-game puzzle board.
     JButton[][] board;
     Container pane;
     MenuBar mb = new MenuBar();

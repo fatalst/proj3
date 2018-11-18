@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class MenuBar extends JFrame {
+public class MenuBar extends JFrame {       //contains the menu bar for instructions, starting, reseting, and quitting the game.
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenu help;

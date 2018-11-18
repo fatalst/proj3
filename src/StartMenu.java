@@ -5,7 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.*;
 
-public class StartMenu extends JFrame{
+public class StartMenu extends JFrame{      //contains the pre-game starting display board.
     JPanel panel;
     GameWindow gw = new GameWindow();
     MenuBar mb = new MenuBar();
