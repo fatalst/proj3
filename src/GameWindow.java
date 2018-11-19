@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -8,7 +10,9 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
     JButton[][] board;
     Container pane;
     MenuBar mb = new MenuBar();
-
+    ArrayList<Integer> reset; //keeps track of button order for board reset 
+    Font font = new Font("sans-serif", Font.BOLD, 100);
+    
     public GameWindow(){
         super();
 
@@ -25,31 +29,42 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         board = new JButton[3][3];
         setJMenuBar(mb.menuBar);
     }
-    void initializeBoard() {
-        int count = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                JButton btn = new JButton();
-                btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
-                btn.setBackground(Color.white);
-                if (count <= 8) {
-                    btn.setText(String.valueOf(count));
-                } else {
-                    btn.setBackground(Color.black);
-                    btn.setText("");
-                }
-                board[i][j] = btn;
-				/*btn.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if(((JButton)e.getSource()).getText().equals("")){
-							//btn.setText(number);
-						}
-					}
-				}); */
-                pane.add(btn);
-                count++;
-            }
-        }
+    public void initializeBoard(){ 
+    	int maxNum = 9; 
+    	Integer currentNum = 0; //temp holds random number 
+    	reset = new ArrayList<Integer>(); //keeps track of button order for board reset 
+    	ArrayList<Integer> numbers = new ArrayList<Integer>(); //holds button values 
+    		numbers.add(1); 
+    		numbers.add(2); 
+    		numbers.add(3); 
+    		numbers.add(4); 
+    		numbers.add(5); 
+    		numbers.add(6);
+    		numbers.add(7); 
+    		numbers.add(8);
+    		numbers.add(null); 
+    	
+    	for(int i = 0; i < 3; i++){
+    		for(int j = 0; j < 3; j++){
+    			Random rand = new Random(); 
+    			int n = rand.nextInt(maxNum) + 0; //7 is max, 0 is min
+    			currentNum = numbers.get(n); 
+    			reset.add(currentNum); //keeps track of button order for board reset 
+    			numbers.remove(n);
+    			maxNum--; 
+    			
+    			JButton btn = new JButton();
+                	btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
+               if(currentNum == null){ //special format for blank tile 
+            	   btn.setBackground(Color.black);
+            	   btn.setText("");
+               } else {
+            	   btn.setBackground(Color.white);
+               	   btn.setText(String.valueOf(currentNum));
+               }
+               board[i][j] = btn;
+               pane.add(btn);
+    		}
+    	} 
     }
 }

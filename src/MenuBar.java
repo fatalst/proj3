@@ -1,75 +1,101 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
-public class MenuBar extends JFrame {       //contains the menu bar for instructions, starting, resetting, and quitting the game.
-    private JMenuBar menuBar;
-    private JMenu menu;
+public class MenuBar extends JFrame{	//contains the menu bar for instructions, starting, resetting, and quitting the game.
+	JMenuBar menuBar;
+	private JMenu menu;
     private JMenu help;
     private JMenuItem newGame;
     private JMenuItem resetBoard;
     private JMenuItem quit;
     private JMenuItem instructions;
-    private Font font = new Font("sans-serif", Font.PLAIN, 40);
-    private Font font2 = new Font("sans-serif", Font.PLAIN, 35);
-
+    private Font font = new Font("sans-serif", Font.PLAIN, 40); 
+    
     public MenuBar(){
-        super();
-        setTitle("Sliding Puzzle");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        //set window preferences
-        JPanel panel = new JPanel(){
-            @Override
-            public Dimension getPreferredSize(){
-                return new Dimension(1000,1000);
-            }};
-        panel.setBackground(Color.white); //can be deleted or for future color changes
-        add(panel);
-        panel.setLayout(null);
-        Icon startGame = new ImageIcon("C:/Users/Megan/Pictures/startButton.png");
-        JButton playNow = new JButton(startGame);
-        playNow.setBackground(Color.white);
-        playNow.setBorderPainted(false);
-        Icon title = new ImageIcon("C:/Users/Megan/Pictures/titlee.png");
-        JLabel welcome = new JLabel(title);
-        playNow.setBounds(350, 600, 312, 163);
-        welcome.setBounds(new Rectangle(new Point(50,175), welcome.getPreferredSize()));
-        panel.add(playNow);
-        panel.add(welcome);
-        pack();
-        setVisible(true);
-        setResizable(false);
-        initializeMenuBar();
+    	super(); 
+    	
+    	NewGame(); 
+    	ResetBoard(); 
+    	Quit(); 
+    	Instructions(); 
+    	
+    	menu = new JMenu("Menu");
+    	menu.setFont(font);
+    	menu.add(newGame);
+        menu.add(resetBoard);
+        menu.add(quit);
+    	
+    	help = new JMenu("Help"); 
+    	help.setFont(font); 
+    	help.add(instructions);
+    	
+    	menuBar = new JMenuBar();
+    	menuBar.add(menu);
+        menuBar.add(help);
     }
-
-    private void initializeMenuBar(){
-        menuBar = new JMenuBar();
-        menu = new JMenu("Menu");
-        help = new JMenu("Help");
-
-        //actions for menu items
-        newGame = new JMenuItem("New Game");
+    
+    public void NewGame(){
+    	newGame = new JMenuItem("New Game");
+    	newGame.setFont(font);
+    	
         newGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new game
+				StartMenu sm = new StartMenu();
+				GameWindow gw = new GameWindow(); 
+            	sm.setVisible(false);
+            	gw.setVisible(true);
             }});
-        resetBoard = new JMenuItem("Reset Board");
+    }
+    
+    public void ResetBoard(){ 
+    	resetBoard = new JMenuItem("Reset Board");
+    	resetBoard.setFont(font);
+    	
         resetBoard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //reset board
+            	GameWindow gw = new GameWindow(); 
+            	Integer temp = 0;
+                for(int i = 0; i < 3; i++){
+                	for(int j = 0; j < 3; j++){
+                		for(int k = 0; k < gw.reset.size(); k++){
+                			temp = gw.reset.get(k); 
+                			JButton btn = new JButton(); 
+                			btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
+                			if(temp == null){
+                				btn.setBackground(Color.black);
+                				btn.setText("");
+                			}else {
+                				btn.setBackground(Color.WHITE);
+                				btn.setText(String.valueOf(temp));
+                			}
+                			gw.board[i][j] = btn;
+                			gw.pane.add(btn); 
+                		}
+                	}
+                }
             }});
-        quit = new JMenuItem("Quit");
+    }
+    
+    public void Quit(){
+    	quit = new JMenuItem("Quit");
+    	quit.setFont(font);
+    	
         quit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }});
-        instructions = new JMenuItem("Instructions");
-        instructions.addActionListener(new ActionListener() {
+    }
+    
+    public void Instructions(){
+    	instructions = new JMenuItem("Instructions");
+    	instructions.setFont(font);
+    	
+    	instructions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final String message = "The sliding tile puzzle challenges player's to slide the tiles into numeric order"
@@ -79,27 +105,11 @@ public class MenuBar extends JFrame {       //contains the menu bar for instruct
                 final String html2 = "px'>";
                 JLabel label = new JLabel(html1 + "500" + html2 + message);
                 label.setForeground(Color.black); //can be deleted or for future color changes
-                label.setFont(font2);
+                label.setFont(font);
                 UIManager UI = new UIManager();
                 UI.put("OptionPane.background", Color.white); //can be deleted or for future color changes
                 UI.put("Panel.background", Color.white); //can be deleted or for future color changes
                 JOptionPane.showMessageDialog(null, label, "Instructions", JOptionPane.PLAIN_MESSAGE);
             }});
-        //Set menu font
-        newGame.setFont(font);
-        resetBoard.setFont(font);
-        quit.setFont(font);
-        instructions.setFont(font);
-        menu.setFont(font);
-        help.setFont(font);
-
-        //add items to menu
-        menu.add(newGame);
-        menu.add(resetBoard);
-        menu.add(quit);
-        help.add(instructions);
-        menuBar.add(menu);
-        menuBar.add(help);
-        setJMenuBar(menuBar);
     }
 }
