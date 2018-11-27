@@ -6,37 +6,49 @@ import java.util.Random;
 
 import javax.swing.*;
 
+
 public class GameWindow extends JFrame {        //contains the in-game puzzle board.
-    JButton[][] board;
-    Container pane;
-    MenuBar mb = new MenuBar();
-    ArrayList<Integer> reset; //keeps track of button order for board reset 
-    Font font = new Font("sans-serif", Font.BOLD, 100);
-    
-    public GameWindow(){
-        super();
+	JButton[][] board;
+	Container pane;
+	MenuBar mb = new MenuBar();
+	ArrayList<Integer> reset; //keeps track of button order for board reset
+	Font font = new Font("sans-serif", Font.BOLD, 100);
 
-        display();
-        buttonSwap();
-    }
-    private void display(){
-        pane = getContentPane();
-        pane.setLayout(new GridLayout(3,3));
-        setTitle("Sliding Puzzle");
-        setSize(1100,1100);
-        setResizable(false);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        board = new JButton[3][3];
-        setJMenuBar(mb.menuBar);
-    }
+	private Point btnPoint;
+	private Point nullBtnPoint;
+	private Point one = new Point(0,0);
+	private Point two = new Point(0,1);
+	private Point three = new Point(0,2);
+	private Point four = new Point(1,0);
+	private Point five = new Point(1,1);
+	private Point six = new Point(1,2);
+	private Point seven = new Point(2,0);
+	private Point eight = new Point(2,1);
+	private Point nine = new Point(2,2);
 
+	public GameWindow() {
+		super();
+
+		display();
+		buttonSwap();
+	}
+
+	private void display() {
+		pane = getContentPane();
+		pane.setLayout(new GridLayout(3, 3));
+		setTitle("Sliding Puzzle");
+		setSize(1100, 1100);
+		setResizable(false);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		board = new JButton[3][3];
+		setJMenuBar(mb.menuBar);
+	}
 
 	public void buttonSwap() {
 		int maxNum = 9;
 		Integer currentNum = 0; //temp holds random number
 		reset = new ArrayList<Integer>(); //keeps track of button order for board reset
 		ArrayList<Integer> numbers = new ArrayList<Integer>(); //holds button values
-		numbers.add(null);
 		numbers.add(1);
 		numbers.add(2);
 		numbers.add(3);
@@ -45,6 +57,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 		numbers.add(6);
 		numbers.add(7);
 		numbers.add(8);
+		numbers.add(null);
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -65,24 +78,23 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 				} else {
 					btn.setBackground(Color.white);
 					btn.setText(String.valueOf(currentNum));
-					btn.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {    //swaps the button clicked on with the null button
-							JButton nullBtn = new JButton();
-
-							nullBtn = getNullButton(board);
-							if (checkNextTo(btn, nullBtn, board)) {    //if the button clicked on is vertically or horizontally next to the null button
-								nullBtn.setBackground(btn.getBackground());        //set null button to the button clicked on
-								nullBtn.setText(btn.getText());
-
-								btn.setBackground(Color.black);        //sets the button clicked on to the new null button
-								btn.setText("");
-							}
-							else { System.out.println("You can't swap these tiles."); }
-						}
-					});
-
 				}
+				btn.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {    //swaps the button clicked on with the null button
+						JButton nullBtn = new JButton();
+
+						nullBtn = getNullButton(board);
+						if (checkNextTo(btn, nullBtn, board)) {    //if the button clicked on is vertically or horizontally next to the null button
+							nullBtn.setBackground(btn.getBackground());        //set null button to the button clicked on
+							nullBtn.setText(btn.getText());
+
+							btn.setBackground(Color.black);        //sets the button clicked on to the new null button
+							btn.setText("");
+						}
+						else { System.out.println("You can't swap these tiles."); }
+					}
+				});
 
 				board[i][j] = btn;
 				pane.add(btn);
@@ -91,7 +103,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 	}
 
 
-	public Point getIndex(JButton btn, JButton[][] board) {		//returns the index of a given point
+	public Point getIndex(JButton btn, JButton[][] board) { 		//returns the index of a given point
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				if( board[i][j].equals(btn) ) {
@@ -103,7 +115,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 	}
 
 
-	public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {     //checks if the button clicked on is vertically or horizontally next to the null button
+	public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {    //checks if the button clicked on is vertically or horizontally next to the null button
 		btnPoint = getIndex(btn,board);
 		nullBtnPoint = getIndex(nullBtn,board);
 
