@@ -103,7 +103,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 	}
 
 
-	public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {    //checks if the button clicked on is vertically or horizontally next to the null button
+	public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {     //checks if the button clicked on is vertically or horizontally next to the null button
 		btnPoint = getIndex(btn,board);
 		nullBtnPoint = getIndex(nullBtn,board);
 
