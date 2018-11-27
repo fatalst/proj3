@@ -17,7 +17,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         super();
 
         display();
-        initializeBoard();
+        buttonSwap();
     }
     private void display(){
         pane = getContentPane();
@@ -29,7 +29,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         board = new JButton[3][3];
         setJMenuBar(mb.menuBar);
     }
-	public void initializeBoard() {
+	public void buttonSwap() {
 		int maxNum = 9;
 		Integer currentNum = 0; //temp holds random number
 		reset = new ArrayList<Integer>(); //keeps track of button order for board reset
@@ -65,12 +65,13 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 					btn.setText(String.valueOf(currentNum));
 					btn.addActionListener(new ActionListener() {
 						@Override
-						public void actionPerformed(ActionEvent e) {    //swap the button clicked with the null button
+						public void actionPerformed(ActionEvent e) {    //swaps the button clicked on with the null button
 							JButton nullBtn = new JButton();
 							nullBtn = getNullButton(board);
-							nullBtn.setBackground(btn.getBackground());
+							nullBtn.setBackground(btn.getBackground());		//set null button to the button clicked on
 							nullBtn.setText(btn.getText());
-							btn.setBackground(Color.black);
+
+							btn.setBackground(Color.black);		//sets the button clicked on to the new null button
 							btn.setText("");
 
 						}
