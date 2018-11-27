@@ -29,6 +29,8 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         board = new JButton[3][3];
         setJMenuBar(mb.menuBar);
     }
+
+
 	public void buttonSwap() {
 		int maxNum = 9;
 		Integer currentNum = 0; //temp holds random number
@@ -89,7 +91,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 	}
 
 
-	public Point getIndex(JButton btn, JButton[][] board) {
+	public Point getIndex(JButton btn, JButton[][] board) {		//returns the index of a given point
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				if( board[i][j].equals(btn) ) {
@@ -102,12 +104,20 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
 
 	public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {    //checks if the button clicked on is vertically or horizontally next to the null button
-		Point btnPoint = getIndex(btn,board);
-		Point nullBtnPoint = getIndex(nullBtn,board);
-		System.out.print(nullBtnPoint);
-		return true;
-		//if () {return true;}
-		//else {return false;}
+		btnPoint = getIndex(btn,board);
+		nullBtnPoint = getIndex(nullBtn,board);
+
+		if ((btnPoint.equals(one)) && (nullBtnPoint.equals(two) || nullBtnPoint.equals(four))) {return true;}
+		if ((btnPoint.equals(two)) && (nullBtnPoint.equals(one) || nullBtnPoint.equals(three) || nullBtnPoint.equals(five))) {return true;}
+		if ((btnPoint.equals(three)) && (nullBtnPoint.equals(two) || nullBtnPoint.equals(six))) {return true;}
+		if ((btnPoint.equals(four)) && (nullBtnPoint.equals(one) || nullBtnPoint.equals(five) || nullBtnPoint.equals(seven))) {return true;}
+		if ((btnPoint.equals(five)) && (nullBtnPoint.equals(two) || nullBtnPoint.equals(four) || nullBtnPoint.equals(six) || nullBtnPoint.equals(eight))) {return true;}
+		if ((btnPoint.equals(six)) && (nullBtnPoint.equals(three) || nullBtnPoint.equals(five) || nullBtnPoint.equals(nine))) {return true;}
+		if ((btnPoint.equals(seven)) && (nullBtnPoint.equals(four) || nullBtnPoint.equals(eight))) {return true;}
+		if ((btnPoint.equals(eight)) && (nullBtnPoint.equals(five) || nullBtnPoint.equals(seven)|| nullBtnPoint.equals(nine))) {return true;}
+		if ((btnPoint.equals(nine)) && (nullBtnPoint.equals(six) || nullBtnPoint.equals(eight))) {return true;}
+
+		else {return false;}
 	}
 
 	public JButton getNullButton(JButton[][] board) {
