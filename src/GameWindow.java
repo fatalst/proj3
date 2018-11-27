@@ -67,13 +67,16 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 						@Override
 						public void actionPerformed(ActionEvent e) {    //swaps the button clicked on with the null button
 							JButton nullBtn = new JButton();
+
 							nullBtn = getNullButton(board);
-							nullBtn.setBackground(btn.getBackground());		//set null button to the button clicked on
-							nullBtn.setText(btn.getText());
+							if (checkNextTo(btn, nullBtn, board)) {    //if the button clicked on is vertically or horizontally next to the null button
+								nullBtn.setBackground(btn.getBackground());        //set null button to the button clicked on
+								nullBtn.setText(btn.getText());
 
-							btn.setBackground(Color.black);		//sets the button clicked on to the new null button
-							btn.setText("");
-
+								btn.setBackground(Color.black);        //sets the button clicked on to the new null button
+								btn.setText("");
+							}
+							else { System.out.println("You can't swap these tiles."); }
 						}
 					});
 
@@ -83,6 +86,28 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 				pane.add(btn);
 			}
 		}
+	}
+
+
+	public Point getIndex(JButton btn, JButton[][] board) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if( board[i][j].equals(btn) ) {
+					return new Point(i, j);
+				}
+			}
+		}
+		return null;
+	}
+
+
+	public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {    //checks if the button clicked on is vertically or horizontally next to the null button
+		Point btnPoint = getIndex(btn,board);
+		Point nullBtnPoint = getIndex(nullBtn,board);
+		System.out.print(nullBtnPoint);
+		return true;
+		//if () {return true;}
+		//else {return false;}
 	}
 
 	public JButton getNullButton(JButton[][] board) {
