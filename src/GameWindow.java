@@ -176,7 +176,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
 
 
-    public ImageIcon getScaledImage(ImageIcon img) {        //scales subImage to equal size of JButton
+    public ImageIcon getScaledImage(ImageIcon img) {        //scales subImage to equal size of JButton 
         ImageIcon scaledImage = img;
         Image image = img.getImage(); // transform to img Image object
         Image newImage = image.getScaledInstance(366, 366,  java.awt.Image.SCALE_SMOOTH); // scale to match size of JButton (Container height (1100) and width (1100) divided by 3 (=366x366))
