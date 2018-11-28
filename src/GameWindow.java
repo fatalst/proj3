@@ -9,7 +9,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-
 // images for game are downloaded during runtime. Program runs faster when images are downloaded first and saved as a file
 // i.e:
 // File f = new file("filepath")
@@ -37,7 +36,6 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
     public GameWindow() {
         super();
-
         display();
         buttonSwap();
     }
@@ -72,9 +70,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-
                 JButton btn = new JButton();
-
                 Random rand = new Random();
                 int n = rand.nextInt(maxNum) + 0; //7 is max, 0 is min
                 currentNum = numbers.get(n);
@@ -84,9 +80,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
                 BufferedImage[][] ImageArr = new BufferedImage[3][3];
                 ImageArr = imageDivide(ImageArr);
-
                 ImageIcon img = new ImageIcon(ImageArr[i][j]);
-
                 btn.setIcon(getScaledImage(img));
 
                 btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
@@ -94,7 +88,6 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                     btn.setBackground(Color.black);
                     btn.setText("");
                     btn.setIcon(null);
-
                 } else {
                     btn.setBackground(Color.white);
                     btn.setText(String.valueOf(currentNum));
@@ -138,12 +131,10 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         int subH = 1;
         int rW = 1;
         int rH = 1;
-
         BufferedImage bimg = null;
         URL url = null;
 
         try {       //loads image during runtime - "loading" is printed in console to display status of image stream
-
             //url = new URL("http://www.papertraildesign.com/wp-content/uploads/2017/06/emoji-sunglasses.png");       //sunglasses smiley face
             url = new URL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWOi91m_B4JhbQnDbkX_iWd_YfuNK4NPHqxQYWdmbe09LiEIgG");    //beach ball
             //url = new URL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz_NSSDOxhKFPS4kWTLZdkar2qY3KrZM9F9oZn6WhT2UzvXXLkJQ");    //puppies
@@ -157,9 +148,6 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
         } catch (MalformedURLException e) { e.printStackTrace(); }
         catch (IOException ex) { ex.printStackTrace(); }
-
-
-
         //break up bimg into 9 [almost] equal parts
         images[0][0] = bimg.getSubimage(x, y, subW, subH);
         images[0][1] = bimg.getSubimage(subW, y, subW, subH);
@@ -170,13 +158,10 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         images[2][0] = bimg.getSubimage(x, subH * 2, subW, subH);
         images[2][1] = bimg.getSubimage(subW, subH * 2, subW, subH);
         images[2][2] = bimg.getSubimage(subW * 2, subH * 2, subW, subH);
-
-        return images;
+        return images;      //returns array of BufferedImages
     }
 
-
-
-    public ImageIcon getScaledImage(ImageIcon img) {        //scales subImage to equal size of JButton 
+    public ImageIcon getScaledImage(ImageIcon img) {        //scales subImage to equal size of JButton
         ImageIcon scaledImage = img;
         Image image = img.getImage(); // transform to img Image object
         Image newImage = image.getScaledInstance(366, 366,  java.awt.Image.SCALE_SMOOTH); // scale to match size of JButton (Container height (1100) and width (1100) divided by 3 (=366x366))
@@ -188,18 +173,13 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if( board[i][j].equals(btn) ) {
-                    return new Point(i, j);
-                }
-            }
-        }
+                    return new Point(i, j); } } }
         return null;
     }
-
 
     public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {    //checks if the button clicked on is vertically or horizontally next to the null button
         btnPoint = getIndex(btn,board);
         nullBtnPoint = getIndex(nullBtn,board);
-
         if ((btnPoint.equals(one)) && (nullBtnPoint.equals(two) || nullBtnPoint.equals(four))) {return true;}
         if ((btnPoint.equals(two)) && (nullBtnPoint.equals(one) || nullBtnPoint.equals(three) || nullBtnPoint.equals(five))) {return true;}
         if ((btnPoint.equals(three)) && (nullBtnPoint.equals(two) || nullBtnPoint.equals(six))) {return true;}
@@ -209,20 +189,15 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         if ((btnPoint.equals(seven)) && (nullBtnPoint.equals(four) || nullBtnPoint.equals(eight))) {return true;}
         if ((btnPoint.equals(eight)) && (nullBtnPoint.equals(five) || nullBtnPoint.equals(seven)|| nullBtnPoint.equals(nine))) {return true;}
         if ((btnPoint.equals(nine)) && (nullBtnPoint.equals(six) || nullBtnPoint.equals(eight))) {return true;}
-
         else {return false;}
     }
 
     public JButton getNullButton(JButton[][] board) {
         JButton theNullBtn = new JButton();
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j].getText() == ("")) {
-                    theNullBtn = board[i][j];
-                }
-            }
-        }
+                    theNullBtn = board[i][j]; } } }
         return theNullBtn;
     }
 }
