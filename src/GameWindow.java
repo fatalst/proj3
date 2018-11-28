@@ -82,15 +82,14 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                 ImageArr = imageDivide(ImageArr);
                 ImageIcon img = new ImageIcon(ImageArr[i][j]);
                 btn.setIcon(getScaledImage(img));
-
                 btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
                 if (currentNum == null) { //special format for blank tile
                     btn.setBackground(Color.black);
-                    btn.setText("");
+                    btn.setName("");
                     btn.setIcon(null);
                 } else {
                     btn.setBackground(Color.white);
-                    btn.setText(String.valueOf(currentNum));
+                    btn.setName(String.valueOf(currentNum));
                 }
                 btn.addActionListener(new ActionListener() {
                     @Override
@@ -100,11 +99,11 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
                         if (checkNextTo(btn, nullBtn, board)) {    //if the button clicked on is vertically or horizontally next to the null button
                             nullBtn.setBackground(btn.getBackground());        //set null button to the button clicked on
-                            nullBtn.setText(btn.getText());
+                            nullBtn.setName(btn.getName());
                             nullBtn.setIcon(btn.getIcon());
 
                             btn.setBackground(Color.black);        //sets the button clicked on to the new null button
-                            btn.setText("");
+                            btn.setName("");
                             btn.setIcon(null);
                         } else {
                             System.out.println("You can't swap these tiles.");
@@ -131,20 +130,21 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         int subH = 1;
         int rW = 1;
         int rH = 1;
+
         BufferedImage bimg = null;
         URL url = null;
 
         try {       //loads image during runtime - "loading" is printed in console to display status of image stream
             //url = new URL("http://www.papertraildesign.com/wp-content/uploads/2017/06/emoji-sunglasses.png");       //sunglasses smiley face
             url = new URL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWOi91m_B4JhbQnDbkX_iWd_YfuNK4NPHqxQYWdmbe09LiEIgG");    //beach ball
-            //url = new URL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz_NSSDOxhKFPS4kWTLZdkar2qY3KrZM9F9oZn6WhT2UzvXXLkJQ");    //puppies
             //url = new URL("https://image.shutterstock.com/z/stock-vector-high-saturation-colored-hologram-sticker-326338961.jpg");    //rainbow metal
             //url = new URL("https://cdn.pixabay.com/photo/2015/10/21/02/16/rainbow-background-998740_960_720.jpg");      //rainbow abstract
 
             bimg =  ImageIO.read(url);
-            subW = ImageIO.read(url).getWidth() / 3;
-            rW = ImageIO.read(url).getWidth() % 3;
-            subH = ImageIO.read(url).getHeight() / 3;
+            rW = ImageIO.read(url).getWidth() % 3 / 3;  //remainder
+            rH = ImageIO.read(url).getHeight() % 3 / 3; //remainder
+            subW = ImageIO.read(url).getWidth() / 3 + rW;
+            subH = ImageIO.read(url).getHeight() / 3 + rH;
 
         } catch (MalformedURLException e) { e.printStackTrace(); }
         catch (IOException ex) { ex.printStackTrace(); }
@@ -178,7 +178,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
     }
 
     public boolean checkNextTo(JButton btn, JButton nullBtn, JButton[][] board) {    //checks if the button clicked on is vertically or horizontally next to the null button
-        btnPoint = getIndex(btn,board);
+        btnPoint = getIndex(btn, board);
         nullBtnPoint = getIndex(nullBtn,board);
         if ((btnPoint.equals(one)) && (nullBtnPoint.equals(two) || nullBtnPoint.equals(four))) {return true;}
         if ((btnPoint.equals(two)) && (nullBtnPoint.equals(one) || nullBtnPoint.equals(three) || nullBtnPoint.equals(five))) {return true;}
@@ -196,7 +196,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         JButton theNullBtn = new JButton();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j].getText() == ("")) {
+                if (board[i][j].getName() == ("")) {
                     theNullBtn = board[i][j]; } } }
         return theNullBtn;
     }
