@@ -108,6 +108,12 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                         } else {
                             System.out.println("You can't swap these tiles.");
                         }
+                        //Checks for winning board
+                        gameOver();
+                        if(gameOver){
+                            System.out.println("You've completed the puzzle!");
+                            //close the game window
+                        }
                     }
                 });
 
