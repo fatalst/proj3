@@ -108,6 +108,12 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                         } else {
                             System.out.println("You can't swap these tiles.");
                         }
+                        //Checks for winning board
+                        gameOver(); 
+						if(gameOver){
+							System.out.println("You've completed the puzzle!");
+						    //close the game window 
+						}
                     }
                 });
 
@@ -200,4 +206,13 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                     theNullBtn = board[i][j]; } } }
         return theNullBtn;
     }
+    
+    public boolean gameOver(){
+		if(board[0][0].getText() == ("1") && board[0][1].getText() == ("2") && board[0][2].getText() == ("3")
+		   && board[1][0].getText() == ("4") && board[1][1].getText() == ("5") && board[1][2].getText() == ("6")
+		   && board[2][0].getText() == ("7") && board[2][1].getText() == ("8") && board[2][2].getText() == ("")){
+				gameOver = true;}
+		
+		return gameOver; 
+	}
 }
