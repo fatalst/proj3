@@ -1,9 +1,14 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.net.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
@@ -47,6 +52,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 	public void buttonSwap() {
 		int maxNum = 9;
 		Integer currentNum = 0; //temp holds random number
+
 		reset = new ArrayList<Integer>(); //keeps track of button order for board reset
 		ArrayList<Integer> numbers = new ArrayList<Integer>(); //holds button values
 		numbers.add(1);
@@ -62,6 +68,8 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 
+				JButton btn = new JButton();
+
 				Random rand = new Random();
 				int n = rand.nextInt(maxNum) + 0; //7 is max, 0 is min
 				currentNum = numbers.get(n);
@@ -69,11 +77,17 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 				numbers.remove(n);
 				maxNum--;
 
-				JButton btn = new JButton();
+				BufferedImage[][] ImageArr = new BufferedImage[3][3];
+				ImageArr = imageDivide(ImageArr);
+
+				ImageIcon img = new ImageIcon(ImageArr[i][j]);
+				btn.setIcon(getScaledImage(img));
+
 				btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
 				if (currentNum == null) { //special format for blank tile
 					btn.setBackground(Color.black);
 					btn.setText("");
+					btn.setIcon(null);
 
 				} else {
 					btn.setBackground(Color.white);
@@ -83,16 +97,19 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 					@Override
 					public void actionPerformed(ActionEvent e) {    //swaps the button clicked on with the null button
 						JButton nullBtn = new JButton();
-
 						nullBtn = getNullButton(board);
+
 						if (checkNextTo(btn, nullBtn, board)) {    //if the button clicked on is vertically or horizontally next to the null button
 							nullBtn.setBackground(btn.getBackground());        //set null button to the button clicked on
 							nullBtn.setText(btn.getText());
+							nullBtn.setIcon(btn.getIcon());
 
 							btn.setBackground(Color.black);        //sets the button clicked on to the new null button
 							btn.setText("");
+							btn.setIcon(null);
+						} else {
+							System.out.println("You can't swap these tiles.");
 						}
-						else { System.out.println("You can't swap these tiles."); }
 					}
 				});
 
@@ -102,6 +119,52 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 		}
 	}
 
+	public BufferedImage[][] imageDivide(BufferedImage[][] imgs) {      //crops photo into nine parts
+		BufferedImage[][] images = new BufferedImage[3][3];
+
+		int x = 1;
+		int y = 1;
+		int subW = 1;
+		int subH = 1;
+		//int rW = 1;
+		//int rH = 1;
+		BufferedImage bimg = null;
+		URL url = null;
+
+		try {
+			url = new URL("http://www.papertraildesign.com/wp-content/uploads/2017/06/emoji-sunglasses.png");       //works for any image, just change URL path
+			bimg =  ImageIO.read(url);
+			subW = ImageIO.read(url).getWidth() / 3;
+			//rW = ImageIO.read(f).getWidth() % 3 * 3;
+			subH = ImageIO.read(url).getHeight() / 3;
+			//rH = ImageIO.read(f).getWidth() % 3 * 3;
+
+		} catch (MalformedURLException e) { e.printStackTrace(); }
+		catch (IOException ex) { ex.printStackTrace(); }
+
+
+		//break up bimg into 9 [almost] equal parts
+		images[0][0] = bimg.getSubimage(x, y, subW, subH);
+		images[0][1] = bimg.getSubimage(subW, y, subW, subH);
+		images[0][2] = bimg.getSubimage(subW * 2, y, subW, subH);
+		images[1][0] = bimg.getSubimage(x, subH, subW, subH);
+		images[1][1] = bimg.getSubimage(subW, subH, subW, subH);
+		images[1][2] = bimg.getSubimage(subW * 2, subH, subW, subH);
+		images[2][0] = bimg.getSubimage(x, subH * 2, subW, subH);
+		images[2][1] = bimg.getSubimage(subW, subH * 2, subW, subH);
+		images[2][2] = bimg.getSubimage(subW * 2, subH * 2, subW, subH);
+
+		return images;
+	}
+
+
+	public ImageIcon getScaledImage(ImageIcon img) {        //scales subImage to equal size of JButton
+		ImageIcon scaledImage = img;
+		Image image = img.getImage(); // transform to img Image object
+		Image newImage = image.getScaledInstance(366, 366,  java.awt.Image.SCALE_SMOOTH); // scale to match size of JButton (Container height (1100) and width (1100) divided by 3 (=366x366))
+		scaledImage = new ImageIcon(newImage);  // transform back to ImageIcon object
+		return scaledImage;
+	}
 
 	public Point getIndex(JButton btn, JButton[][] board) { 		//returns the index of a given point
 		for (int i = 0; i < 3; i++) {
