@@ -1,3 +1,5 @@
+package src.main;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.util.Random;
+import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 // images for game are downloaded during runtime. Program runs faster when images are downloaded first and saved as a file
 // i.e:
@@ -80,6 +87,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
                 BufferedImage[][] ImageArr = new BufferedImage[3][3];
                 ImageArr = imageDivide(ImageArr);
+                ImageArr = shuffle(ImageArr);
                 ImageIcon img = new ImageIcon(ImageArr[i][j]);
                 btn.setIcon(getScaledImage(img));
                 btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
@@ -213,5 +221,21 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                 && board[2][0].getName() == ("7") && board[2][1].getName() == ("8") && board[2][2].getName() == ("")){
             gameOver = true;}
         return gameOver;
+    }
+
+    public BufferedImage[][] shuffle(BufferedImage[][] imgs){
+        Random rnd = ThreadLocalRandom.current();
+
+        for (int i = imgs.length - 1; i > 0; i--) {
+            for (int j = imgs[i].length - 1; j > 0; j--) {
+                int m = rnd.nextInt(i + 1);
+                int n = rnd.nextInt(j + 1);
+
+                BufferedImage temp = imgs[i][j];
+                imgs[i][j] = imgs[m][n];
+                imgs[m][n] = temp;
+            }
+        }
+        return imgs;
     }
 }
