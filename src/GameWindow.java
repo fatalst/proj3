@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.io.File;
 
 import java.util.Random;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Arrays;
 
 
 // images for game are downloaded during runtime. Program runs faster when images are downloaded first and saved as a file
@@ -145,19 +147,19 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         int rH = 1;
 
         BufferedImage bimg = null;
-        URL url = null;
+        File file = null;
 
         try {       //loads image during runtime - "loading" is printed in console to display status of image stream
-            //url = new URL("http://www.papertraildesign.com/wp-content/uploads/2017/06/emoji-sunglasses.png");       //sunglasses smiley face
-            url = new URL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWOi91m_B4JhbQnDbkX_iWd_YfuNK4NPHqxQYWdmbe09LiEIgG");    //beach ball
-            //url = new URL("https://image.shutterstock.com/z/stock-vector-high-saturation-colored-hologram-sticker-326338961.jpg");    //rainbow metal
-            //url = new URL("https://cdn.pixabay.com/photo/2015/10/21/02/16/rainbow-background-998740_960_720.jpg");      //rainbow abstract
+            //file = new File("assets/sunglasses.png");       //sunglasses smiley face
+            file = new File("assets/beachball.jpg");    //beach ball
+            //file = new File("assets/rainbow.jpg");    //rainbow metal
+            //file = new File("assets/abstract.jpg");      //rainbow abstract
 
-            bimg =  ImageIO.read(url);
-            rW = ImageIO.read(url).getWidth() % 3 / 3;  //remainder
-            rH = ImageIO.read(url).getHeight() % 3 / 3; //remainder
-            subW = ImageIO.read(url).getWidth() / 3 + rW;
-            subH = ImageIO.read(url).getHeight() / 3 + rH;
+            bimg =  ImageIO.read(file);
+            rW = ImageIO.read(file).getWidth() % 3 / 3;  //remainder
+            rH = ImageIO.read(file).getHeight() % 3 / 3; //remainder
+            subW = ImageIO.read(file).getWidth() / 3 + rW;
+            subH = ImageIO.read(file).getHeight() / 3 + rH;
 
         } catch (MalformedURLException e) { e.printStackTrace(); }
         catch (IOException ex) { ex.printStackTrace(); }
@@ -223,8 +225,11 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         return gameOver;
     }
 
-    public BufferedImage[][] shuffle(BufferedImage[][] imgs){
+    public BufferedImage[][] shuffle(BufferedImage[][] imgs){ // shuffles the images
         Random rnd = ThreadLocalRandom.current();
+        BufferedImage[] swappedImages = new BufferedImage[9];
+        int counter = 0;
+        // int[][] coordinates;
 
         for (int i = imgs.length - 1; i > 0; i--) {
             for (int j = imgs[i].length - 1; j > 0; j--) {
@@ -232,8 +237,15 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                 int n = rnd.nextInt(j + 1);
 
                 BufferedImage temp = imgs[i][j];
-                imgs[i][j] = imgs[m][n];
-                imgs[m][n] = temp;
+                boolean check = Arrays.asList(swappedImages).contains(temp);
+                if(!check && counter <= 9){
+                    swappedImages[counter] = temp;
+                    counter++;
+                    swappedImages[counter] = imgs[m][n];
+                    counter++;
+                    imgs[i][j] = imgs[m][n];
+                    imgs[m][n] = temp;
+                }
             }
         }
         return imgs;
