@@ -16,6 +16,8 @@ import java.util.Random;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Arrays;
+import java.awt.List;
+
 
 
 // images for game are downloaded during runtime. Program runs faster when images are downloaded first and saved as a file
@@ -77,6 +79,8 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         numbers.add(null);
         int num = 10;
 
+        ArrayList<BufferedImage> ImageList = imageDivide();
+        BufferedImage[][] ImageArr = shuffle(ImageList);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 JButton btn = new JButton();
@@ -87,9 +91,6 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                 numbers.remove(n);
                 maxNum--;
 
-                BufferedImage[][] ImageArr = new BufferedImage[3][3];
-                ImageArr = imageDivide(ImageArr);
-                ImageArr = shuffle(ImageArr);
                 ImageIcon img = new ImageIcon(ImageArr[i][j]);
                 btn.setIcon(getScaledImage(img));
                 btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
@@ -135,8 +136,8 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         System.out.println("Loading................................ 100%");
     }
 
-    public BufferedImage[][] imageDivide(BufferedImage[][] imgs) {      //crops photo into nine parts
-        BufferedImage[][] images = new BufferedImage[3][3];
+    public ArrayList<BufferedImage> imageDivide() {      //crops photo into nine parts
+        ArrayList<BufferedImage> images = new ArrayList<BufferedImage>();
 
         //initializations required prior to try-catch
         int x = 1;  // = x-coordinate of upper left corner of square
@@ -164,15 +165,15 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         } catch (MalformedURLException e) { e.printStackTrace(); }
         catch (IOException ex) { ex.printStackTrace(); }
         //break up bimg into 9 [almost] equal parts
-        images[0][0] = bimg.getSubimage(x, y, subW, subH);
-        images[0][1] = bimg.getSubimage(subW, y, subW, subH);
-        images[0][2] = bimg.getSubimage(subW * 2 , y, subW, subH);
-        images[1][0] = bimg.getSubimage(x, subH, subW, subH);
-        images[1][1] = bimg.getSubimage(subW, subH, subW, subH);
-        images[1][2] = bimg.getSubimage(subW * 2, subH, subW, subH);
-        images[2][0] = bimg.getSubimage(x, subH * 2, subW, subH);
-        images[2][1] = bimg.getSubimage(subW, subH * 2, subW, subH);
-        images[2][2] = bimg.getSubimage(subW * 2, subH * 2, subW, subH);
+        images.add(bimg.getSubimage(x, y, subW, subH));
+        images.add(bimg.getSubimage(subW, y, subW, subH));
+        images.add(bimg.getSubimage(subW * 2 , y, subW, subH));
+        images.add(bimg.getSubimage(x, subH, subW, subH));
+        images.add(bimg.getSubimage(subW, subH, subW, subH));
+        images.add(bimg.getSubimage(subW * 2, subH, subW, subH));
+        images.add(bimg.getSubimage(x, subH * 2, subW, subH));
+        images.add(bimg.getSubimage(subW, subH * 2, subW, subH));
+        images.add(bimg.getSubimage(subW * 2, subH * 2, subW, subH));
         return images;      //returns array of BufferedImages
     }
 
@@ -225,29 +226,18 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         return gameOver;
     }
 
-    public BufferedImage[][] shuffle(BufferedImage[][] imgs){ // shuffles the images
-        Random rnd = ThreadLocalRandom.current();
-        BufferedImage[] swappedImages = new BufferedImage[9];
-        int counter = 0;
-        // int[][] coordinates;
+    public BufferedImage[][] shuffle(ArrayList<BufferedImage> imgs){ // shuffles the images
+        Collections.shuffle(imgs);
 
-        for (int i = imgs.length - 1; i > 0; i--) {
-            for (int j = imgs[i].length - 1; j > 0; j--) {
-                int m = rnd.nextInt(i + 1);
-                int n = rnd.nextInt(j + 1);
+        BufferedImage[][] imgArray = new BufferedImage[3][3];
 
-                BufferedImage temp = imgs[i][j];
-                boolean check = Arrays.asList(swappedImages).contains(temp);
-                if(!check && counter <= 9){
-                    swappedImages[counter] = temp;
-                    counter++;
-                    swappedImages[counter] = imgs[m][n];
-                    counter++;
-                    imgs[i][j] = imgs[m][n];
-                    imgs[m][n] = temp;
-                }
-            }
+        for (int i = 0; i < 3; i++)
+        {
+          for (int j = 0; j < 3; j++)
+          {
+            imgArray[i][j] = imgs.get(j + i * 3);
+          }
         }
-        return imgs;
+        return imgArray;
     }
 }
