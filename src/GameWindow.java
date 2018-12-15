@@ -31,7 +31,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
     Container pane;
     MenuBar mb = new MenuBar();
     ArrayList<Integer> reset; //keeps track of button order for board reset
-    BufferedImage[][] resetBoard = new BufferedImage[3][3];
+    JButton[][] resetBoard = new JButton[3][3];
     Font font = new Font("sans-serif", Font.BOLD, 100);
 
     private Point btnPoint;
@@ -82,7 +82,8 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         int num = 10;
 
         ArrayList<BufferedImage> ImageList = imageDivide(); // divides image and puts it into a liner ArrayList
-        BufferedImage[][] ImageArr = shuffle(ImageList); // shuffles images then puts it in a 2d array
+        ArrayList<JButton> ButtonList = new ArrayList<JButton>();
+        int currentIndex = 0;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -94,7 +95,8 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                 numbers.remove(n);
                 maxNum--;
 
-                ImageIcon img = new ImageIcon(ImageArr[i][j]);
+                ImageIcon img = new ImageIcon(ImageList.get(currentIndex));
+                currentIndex++;
                 btn.setIcon(getScaledImage(img));
                 btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 100));
                 if (currentNum == null) { //special format for blank tile
@@ -122,20 +124,22 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
                         } else {
                             System.out.println("You can't swap these tiles.");
                         }
+                        
                         //Checks for winning board
                         if(gameOver()){
                             System.out.println("You've completed the puzzle!");
+                            System.exit(0);
                             //close the game window
                         }
                     }
                 });
 
-                board[i][j] = btn;
-                pane.add(btn);
+                ButtonList.add(btn);
                 System.out.println("Loading................................ "  + num + "%");
                 num = num + 10;
             }
         }
+        board = shuffle(ButtonList); // shuffles images then puts it in a 2d array
         System.out.println("Loading................................ 100%");
     }
 
@@ -226,25 +230,26 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         return gameOver;
     }
 
-    public BufferedImage[][] shuffle(ArrayList<BufferedImage> imgs){ // shuffles the images
-        Collections.shuffle(imgs);
+    public JButton[][] shuffle(ArrayList<JButton> btns){ // shuffles the images
+        Collections.shuffle(btns);
 
-        BufferedImage[][] imgArray = new BufferedImage[3][3];
+        JButton[][] buttonArray = new JButton[3][3];
 
         for (int i = 0; i < 3; i++){
           for (int j = 0; j < 3; j++){
-            imgArray[i][j] = imgs.get(j + i * 3);
+            buttonArray[i][j] = btns.get(j + i * 3);
+            pane.add(buttonArray[i][j]);
           }
         }
 
-        for(int i = 0; i < imgArray.length; i++){
-          BufferedImage[] aItem = imgArray[i];
+        for(int i = 0; i < buttonArray.length; i++){
+          JButton[] aItem = buttonArray[i];
           int aLength = aItem.length;
-          resetBoard[i] = new BufferedImage[aLength];
+          resetBoard[i] = new JButton[aLength];
           System.arraycopy(aItem, 0, resetBoard[i], 0, aLength);
         }
 
-        return imgArray;
+        return buttonArray;
     }
 
     public File randomFile(){
