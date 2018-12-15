@@ -31,6 +31,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
     Container pane;
     MenuBar mb = new MenuBar();
     ArrayList<Integer> reset; //keeps track of button order for board reset
+    BufferedImage[][] resetBoard = new BufferedImage[3][3];
     Font font = new Font("sans-serif", Font.BOLD, 100);
 
     private Point btnPoint;
@@ -68,6 +69,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
         reset = new ArrayList<Integer>(); //keeps track of button order for board reset
         ArrayList<Integer> numbers = new ArrayList<Integer>(); //holds button values
+
         numbers.add(1);
         numbers.add(2);
         numbers.add(3);
@@ -79,8 +81,9 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         numbers.add(null);
         int num = 10;
 
-        ArrayList<BufferedImage> ImageList = imageDivide();
-        BufferedImage[][] ImageArr = shuffle(ImageList);
+        ArrayList<BufferedImage> ImageList = imageDivide(); // divides image and puts it into a liner ArrayList
+        BufferedImage[][] ImageArr = shuffle(ImageList); // shuffles images then puts it in a 2d array
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 JButton btn = new JButton();
@@ -151,10 +154,7 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
         File file = null;
 
         try {       //loads image during runtime - "loading" is printed in console to display status of image stream
-            //file = new File("assets/sunglasses.png");       //sunglasses smiley face
-            file = new File("assets/beachball.jpg");    //beach ball
-            //file = new File("assets/rainbow.jpg");    //rainbow metal
-            //file = new File("assets/abstract.jpg");      //rainbow abstract
+            file = randomFile();
 
             bimg =  ImageIO.read(file);
             rW = ImageIO.read(file).getWidth() % 3 / 3;  //remainder
@@ -231,13 +231,24 @@ public class GameWindow extends JFrame {        //contains the in-game puzzle bo
 
         BufferedImage[][] imgArray = new BufferedImage[3][3];
 
-        for (int i = 0; i < 3; i++)
-        {
-          for (int j = 0; j < 3; j++)
-          {
+        for (int i = 0; i < 3; i++){
+          for (int j = 0; j < 3; j++){
             imgArray[i][j] = imgs.get(j + i * 3);
           }
         }
+
+        for(int i = 0; i < imgArray.length; i++){
+          BufferedImage[] aItem = imgArray[i];
+          int aLength = aItem.length;
+          resetBoard[i] = new BufferedImage[aLength];
+          System.arraycopy(aItem, 0, resetBoard[i], 0, aLength);
+        }
+
         return imgArray;
+    }
+
+    public File randomFile(){
+        Random rdm = new Random();
+        return new File("assets/" + Integer.toString(rdm.nextInt(4) + 1) + ".jpg");
     }
 }
