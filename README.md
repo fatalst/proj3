@@ -122,13 +122,13 @@ Usernames may be added in a later version of the app. Version 1.0 does not requi
 6.2 Requirements List
 ---
 1. Slide Tile Puzzle Board [see here](#41-slide-tile-puzzle-board)
-  - Shuffle function: shuffling the image tiles
-  - Image loading: the ability to load an image
-  - Image randomizer: the ability to randomize which image is loading
-  - Image splitting: the ability to split the image up into a 9x9 grid
-2. Movement functionality [see here](#42-movement-function)
-  - Blank button: a blank button acting as the blank space
-  - Swap functionality: the ability to swap the blank tile with an image tile if they are touching each other
-3. Reset game [see here](#43-reset-game)
-4. Best player time and move count [see here](#44-best-player-time-and-move-count)
-5. New game functionality: the ability to open a new game window
+2. Shuffle function: shuffling the image tiles
+3. Image loading: the ability to load an image
+4. Image splitting: the ability to split the image up into a 9x9 grid
+5. Movement functionality [see here](#42-movement-function)
+6. Blank button: a blank button acting as the blank space
+7. Swap functionality: the ability to swap the blank tile with an image tile if they are touching each other
+8. New game functionality: the ability to open a new game window
+9. Reset game [see here](#43-reset-game)
+10. Best player time and move count [see here](#44-best-player-time-and-move-count)
+11. Image randomizer: the ability to randomize which image is loading
